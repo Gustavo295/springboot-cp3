@@ -1,7 +1,10 @@
 package br.com.fiap.api_rest.controller;
 
+import br.com.fiap.api_rest.dto.ClienteRequest;
+import br.com.fiap.api_rest.dto.ClienteResponse;
 import br.com.fiap.api_rest.model.Cliente;
 import br.com.fiap.api_rest.repository.ClienteRepository;
+import br.com.fiap.api_rest.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -21,27 +24,32 @@ import java.util.function.Function;
 public class ClienteController {
     @Autowired
     ClienteRepository clienteRepository;
+    @Autowired
+    ClienteService clienteService;
 
     // CREATE READ UPDATE DELETE
     // POST GET PUT DELETE
     @PostMapping
-    public ResponseEntity<Cliente> createCliente(@RequestBody Cliente cliente){
-        Cliente clienteSalvo = clienteRepository.save(cliente);
+    public ResponseEntity<Cliente> createCliente(@RequestBody ClienteRequest cliente){
+        Cliente clienteSalvo = clienteRepository.save(clienteService.requestToCliente(cliente));
         return new ResponseEntity<>(clienteSalvo, HttpStatus.CREATED);
     };
 
     @GetMapping
-    public ResponseEntity<List<Cliente>> readClientes() {
+    public ResponseEntity<List<ClienteResponse>> readClientes() {
         List<Cliente> clientes = clienteRepository.findAll();
-        return new ResponseEntity<>(clientes, HttpStatus.OK);
+        return new ResponseEntity<>(clienteService.clientesToResponse(clientes), HttpStatus.OK);
     }
+
+    // PathVariable = parâmetro URL EX: /clientes/1
+    // RequestParam = parâmetro query EX: /clientes/?id=1
     @GetMapping("/{id}")
-    public ResponseEntity<Cliente> readCliente(@PathVariable Long id) {
+    public ResponseEntity<ClienteResponse> readCliente(@PathVariable Long id) {
         Optional<Cliente> cliente = clienteRepository.findById(id);
         if (cliente.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(cliente.get(), HttpStatus.OK);
+        return new ResponseEntity<>(clienteService.clienteToResponse(cliente.get()), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
