@@ -3,14 +3,24 @@ package br.com.fiap.api_rest.service;
 import br.com.fiap.api_rest.dto.ClienteRequest;
 import br.com.fiap.api_rest.dto.ClienteResponse;
 import br.com.fiap.api_rest.model.Cliente;
+import br.com.fiap.api_rest.repository.ClienteRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class ClienteService {
+    private final ClienteRepository clienteRepository;
+
+    public ClienteService(ClienteRepository clienteRepository){
+        this.clienteRepository = clienteRepository;
+    }
+    // @Autowired
+    // ClienteRepository clienteRepository;
     public Cliente requestToCliente(ClienteRequest clienteRequest) {
         return new Cliente(null,
                 clienteRequest.getNome(),
@@ -32,5 +42,11 @@ public class ClienteService {
         }
         return clientesResponse;
         // return clientes.stream().map(this::clienteToResponse).collect(Collectors.toList());
+    }
+    public Page<ClienteResponse> findAll(Pageable pageable) {
+        // busca os clientes de acordo com a configuração do pageable
+        // converte para response e retorna como uma Page<ClienteResponse>
+        // return clienteRepository.findAll(pageable).map(cliente -> clienteToResponse(cliente);
+        return clienteRepository.findAll(pageable).map(this::clienteToResponse);
     }
 }
