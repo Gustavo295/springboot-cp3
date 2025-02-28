@@ -47,7 +47,7 @@ public class ClienteController {
         if (cliente.isEmpty()){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(clienteService.clienteToResponse(cliente.get()), HttpStatus.OK);
+        return new ResponseEntity<>(clienteService.clienteToResponse(cliente.get(), true), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -57,7 +57,7 @@ public class ClienteController {
         if (clienteExistente.isEmpty()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        cliente.setId(clienteExistente.get().getId);
+        cliente.setId(clienteExistente.get().getId());
         Cliente clienteAtualizado = clienteRepository.save(cliente);
         return new ResponseEntity<>(clienteAtualizado, HttpStatus.CREATED);
     }
