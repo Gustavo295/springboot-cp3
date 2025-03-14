@@ -24,7 +24,7 @@ import java.util.Optional;
 import java.util.function.Function;
 
 @RestController
-@RequestMapping(value = "/clientes", produces = {"application/json")
+@RequestMapping(value = "/clientes", produces = {"application/json"})
 @Tag(name = "api-clientes")
 public class ClienteController {
     @Autowired
