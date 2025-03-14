@@ -7,6 +7,8 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.Date;
+
 @Entity
 public class Cliente {
     @Id
@@ -14,22 +16,14 @@ public class Cliente {
     private Long id;
     private String nome;
     private int idade;
+    private Date dataNascimento;
     private String email;
     private String senha;
     private String cpf;
     private Categoria categoria;
+    private boolean vip;
 
     public Cliente() {
-    }
-
-    public Cliente(Long id, String nome, int idade, String email, String senha, String cpf, Categoria categoria) {
-        this.id = id;
-        this.nome = nome;
-        this.idade = idade;
-        this.email = email;
-        this.senha = senha;
-        this.cpf = cpf;
-        this.categoria = categoria;
     }
 
     public Long getId() {
@@ -54,6 +48,14 @@ public class Cliente {
 
     public void setIdade(int idade) {
         this.idade = idade;
+    }
+
+    public Date getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getEmail() {
@@ -86,5 +88,25 @@ public class Cliente {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public boolean isVip() {
+        return vip;
+    }
+
+    public void setVip(boolean vip) {
+        this.vip = vip;
+    }
+
+    public Cliente(Long id, String nome, int idade, Date dataNascimento, String email, String senha, String cpf, Categoria categoria, boolean vip) {
+        this.id = id;
+        this.nome = nome;
+        this.idade = idade;
+        this.dataNascimento = dataNascimento;
+        this.email = email;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.categoria = categoria;
+        this.vip = vip;
     }
 }
