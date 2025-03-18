@@ -22,6 +22,14 @@ public class Cliente {
     private String cpf;
     private Categoria categoria;
     private boolean vip;
+    @ManyToOne
+    @JoinColumn(name = "id_filial")
+    private Filial filial;
+    @ManyToMany
+    @JoinTable(name = "grupo_cliente",
+    joinColumns = @JoinColumn(name = "id_grupo", referencedColumn="id"),
+    inverseJoinColumns = @JoinColumn(name = "id_cliente", referencedColumn="id"))
+    private List<Grupo> grupos;
 
     public Cliente() {
     }
@@ -98,7 +106,24 @@ public class Cliente {
         this.vip = vip;
     }
 
-    public Cliente(Long id, String nome, int idade, Date dataNascimento, String email, String senha, String cpf, Categoria categoria, boolean vip) {
+    public Filial getFilial(){
+    	return filal;
+    }
+	
+    public void setFilial(Filial filial) {
+    	this.filial = filial;
+    }
+
+    public List<Grupo> getGrupos(){
+    	return grupos;
+    }
+
+    public void setGrupos(List<Grupo> grupos) {
+    	this.grupos = grupos;
+    }
+
+
+    public Cliente(Long id, String nome, int idade, Date dataNascimento, String email, String senha, String cpf, Categoria categoria, boolean vip, Filial filial) {
         this.id = id;
         this.nome = nome;
         this.idade = idade;
@@ -108,5 +133,6 @@ public class Cliente {
         this.cpf = cpf;
         this.categoria = categoria;
         this.vip = vip;
+	this.filial = filial;
     }
 }
