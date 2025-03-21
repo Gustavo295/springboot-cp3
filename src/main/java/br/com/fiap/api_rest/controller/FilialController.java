@@ -11,23 +11,47 @@ import org.springframework.data.domain.*;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-@RequestController
+@RestController
 @RequestMapping("/filial")
 public class FilialController{
-    @Autowired
-    FilialRepository filialRepository;
-
     @Autowired
     FilialService filialService;
 
     @PostMapping
-    public ResponseEntitty<Filial> create(@Valid @RequestBody FilialRequest filial){
+    public ResponseEntity<FilialResponse> create(@Valid @RequestBody FilialRequest filialRequest) {
         return new ResponseEntity<>(filialService.create(filialRequest), HttpStatus.CREATED);
-    };
+    }
 
+    @GetMapping
+    public ResponseEntity<List<FilialResponse>> findAll() {
+        return new ResponseEntity<>(filialService.findAll(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<FilialResponse> findById(@PathVariable Long id) {
+        return new ResponseEntity<>(filialService.findById(id), HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<FilialResponse> update(@PathVariable Long id, @Valid @RequestBody FilialRequest filialRequest) {
+        FilialResponse filialResponse = filialService.update(id, filialRequest);
+        if (filialResponse == null) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(filialResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        if (filialService.delete(id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
 }

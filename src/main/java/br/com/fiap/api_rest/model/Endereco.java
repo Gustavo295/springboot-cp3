@@ -8,7 +8,7 @@ public class Endereco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String localizacao;
-    @OneToOne(mappedBy = "endereco", cascade = CascadeType.ALLZAS)
+    @OneToOne(mappedBy = "endereco")
     private Filial filial;
 
     public Long getId(){
@@ -28,7 +28,7 @@ public class Endereco {
     }
 
     public Filial getFilial(){
-    	return filal;
+    	return filial;
     }
 	
     public void setFilial(Filial filial) {

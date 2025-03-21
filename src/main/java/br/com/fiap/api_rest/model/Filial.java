@@ -15,36 +15,48 @@ public class Filial {
     @OneToMany(mappedBy = "filial")
     private List<Cliente> clientes;
 
-    public Long getId(){
-    	return id;
+    public Filial() {
     }
-	
+
+    public Filial(Long id, String nome, Endereco endereco, List<Cliente> clientes) {
+        this.id = id;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.clientes = clientes;
+    }
+
+    public Filial(String nome, Endereco endereco) {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
     public void setId(Long id) {
-    	this.id = id;
+        this.id = id;
     }
 
-    public String getNome(){
-    	return nome;
+    public String getNome() {
+        return nome;
     }
-	
+
     public void setNome(String nome) {
-    	this.nome = nome;
+        this.nome = nome;
     }
 
-    public Endereco getEndereco(){
-    	return endereco;
+    public Endereco getEndereco() {
+        return endereco;
     }
-	
+
     public void setEndereco(Endereco endereco) {
-    	this.endereco = endereco;
+        this.endereco = endereco;
     }
 
-    public List<Cliente> getClientes(){
-    	return clientes;
+    public List<Cliente> getClientes() {
+        return clientes;
     }
 
     public void setClientes(List<Cliente> clientes) {
-    	this.clientes = clientes;
+        this.clientes = clientes;
     }
-
 }

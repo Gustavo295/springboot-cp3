@@ -1,13 +1,9 @@
 package br.com.fiap.api_rest.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Cliente {
@@ -27,11 +23,11 @@ public class Cliente {
     private Filial filial;
     @ManyToMany
     @JoinTable(name = "grupo_cliente",
-    joinColumns = @JoinColumn(name = "id_grupo", referencedColumn="id"),
-    inverseJoinColumns = @JoinColumn(name = "id_cliente", referencedColumn="id"))
+    joinColumns = @JoinColumn(name = "id_grupo", referencedColumnName="id"),
+    inverseJoinColumns = @JoinColumn(name = "id_cliente", referencedColumnName="id"))
     private List<Grupo> grupos;
 
-    public Cliente() {
+    public Cliente(Object o, String nome, int idade, String email, String senha, String cpf, Categoria categoria) {
     }
 
     public Long getId() {
@@ -107,7 +103,7 @@ public class Cliente {
     }
 
     public Filial getFilial(){
-    	return filal;
+    	return filial;
     }
 	
     public void setFilial(Filial filial) {
